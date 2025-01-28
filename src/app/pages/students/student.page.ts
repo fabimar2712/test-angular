@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ export class StudentPage implements OnInit {
   filteredStudents: Student[] = [];
   searchTerm = '';
   currentPage = 1;
-  itemsPerPage = 6;
+  itemsPerPage = 10;
   defaultAvatars = [
     '../../assets/images/student-1.png',
     '../../assets/images/student-2.png',
@@ -37,6 +37,8 @@ export class StudentPage implements OnInit {
     '../../assets/images/student-5.png',
     '../../assets/images/student-6.png',
   ];
+  isModalOpen: boolean = false;
+  selectedStudent: Student | null = null;
 
   constructor(private apiService: ApiService) {}
 
@@ -58,70 +60,81 @@ export class StudentPage implements OnInit {
       }
     );
   }
+
   getRandomAvatar(): string {
-    const randomIndex = Math.floor(Math.random() * this.defaultAvatars.length)
-    return this.defaultAvatars[randomIndex]
+    const randomIndex = Math.floor(Math.random() * this.defaultAvatars.length);
+    return this.defaultAvatars[randomIndex];
   }
 
   filterStudents() {
     this.filteredStudents = this.students.filter((student) => {
-      const searchStr = this.searchTerm.toLowerCase()
+      const searchStr = this.searchTerm.toLowerCase();
       return (
         student.first_name.toLowerCase().includes(searchStr) ||
         student.last_name.toLowerCase().includes(searchStr) ||
         student.address.toLowerCase().includes(searchStr)
-      )
-    })
+      );
+    });
   }
 
   onSearchChange(event: any) {
-    this.searchTerm = event.target.value
-    this.filterStudents()
-    this.currentPage = 1
+    this.searchTerm = event.target.value;
+    this.filterStudents();
+    this.currentPage = 1;
   }
 
   formatDate(date: string): string {
-    return new Date(date).toLocaleDateString("es-ES", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
+    return new Date(date).toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   }
 
   calculateAge(birthDate: string): number {
-    const today = new Date()
-    const birth = new Date(birthDate)
-    let age = today.getFullYear() - birth.getFullYear()
-    const monthDiff = today.getMonth() - birth.getMonth()
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
 
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--
+      age--;
     }
 
-    return age
+    return age;
   }
 
   get totalPages(): number {
-    return Math.ceil(this.filteredStudents.length / this.itemsPerPage)
+    return Math.ceil(this.filteredStudents.length / this.itemsPerPage);
   }
 
   get paginatedStudents(): Student[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage
-    return this.filteredStudents.slice(startIndex, startIndex + this.itemsPerPage)
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredStudents.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   setPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page
+      this.currentPage = page;
     }
   }
 
   getPageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1)
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
   getRandomAccentColor(): string {
-    const colors = ["#4834d4", "#686de0", "#6c5ce7", "#a55eea"]
-    return colors[Math.floor(Math.random() * colors.length)]
+    const colors = ['#4834d4', '#686de0', '#6c5ce7', '#a55eea'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  openStudentDetails(student: Student) {
+    this.selectedStudent = student;
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedStudent = null;
   }
 }
