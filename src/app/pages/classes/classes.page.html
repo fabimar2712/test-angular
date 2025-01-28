@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <!-- Encabezado Global -->
-  <app-page-header title="Gestión de Clases" subtitle="Ver y administrar horarios de clases"></app-page-header>
+  <app-page-header title="Gestión de Reservas" subtitle="Ver y administrar horarios de Reservas"></app-page-header>
 
   <div class="main-content">
 
@@ -8,15 +8,11 @@
     <div class="search-section">
       <div class="search-box">
         <ion-icon name="search-outline"></ion-icon>
-        <input type="text" placeholder="Buscar clases..." [(ngModel)]="searchTerm" (input)="onSearchChange($event)">
+        <input type="text" placeholder="Buscar Reservas..." [(ngModel)]="searchTerm" (input)="onSearchChange($event)">
       </div>
-      <ion-button fill="clear" class="filter-button">
-        <ion-icon name="filter-outline"></ion-icon>
-        Filtrar
-      </ion-button>
     </div>
 
-    <!-- Cuadrícula de Clases -->
+    <!-- Cuadrícula de Reservas -->
     <div class="classes-grid">
       <div class="class-card" *ngFor="let class of paginatedClasses">
         <div class="card-header">
