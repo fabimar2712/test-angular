@@ -1,0 +1,87 @@
+<ion-content [fullscreen]="true">
+  <!-- Encabezado Global -->
+  <app-page-header title="Gestión de Clases" subtitle="Ver y administrar horarios de clases"></app-page-header>
+
+  <div class="main-content">
+
+    <!-- Sección de Búsqueda -->
+    <div class="search-section">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" placeholder="Buscar clases..." [(ngModel)]="searchTerm" (input)="onSearchChange($event)">
+      </div>
+      <ion-button fill="clear" class="filter-button">
+        <ion-icon name="filter-outline"></ion-icon>
+        Filtrar
+      </ion-button>
+    </div>
+
+    <!-- Cuadrícula de Clases -->
+    <div class="classes-grid">
+      <div class="class-card" *ngFor="let class of paginatedClasses">
+        <div class="card-header">
+          <div class="card-icon" [ngStyle]="{'background-color': '#' + class.id.substr(0, 6)}">
+            {{ class.tutor.first_name[0] }}{{ class.tutor.last_name[0] }}
+          </div>
+          <div class="speciality-badge">
+            <span class="speciality-label">Especialidad:</span>
+            <span class="speciality-value">{{ class.tutor.speciality.toLocaleUpperCase() }}</span>
+          </div>
+
+        </div>
+
+        <div class="card-content">
+          <div class="participants-info">
+            <div class="tutor-info">
+              <h3>Profesor</h3>
+              <p>{{ class.tutor.first_name }} {{ class.tutor.last_name }}</p>
+              <span class="email">{{ class.tutor.email }}</span>
+            </div>
+            <div class="student-info">
+              <h3>Estudiante</h3>
+              <p>{{ class.student.first_name }} {{ class.student.last_name }}</p>
+            </div>
+          </div>
+
+          <div class="class-info">
+            <p><ion-icon name="calendar-outline"></ion-icon> {{ formatDate(class.date) }}</p>
+            <p><ion-icon name="time-outline"></ion-icon> {{ formatTime(class.start_time) }} - {{
+              formatTime(class.end_time) }}</p>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="status-badge" [class]="getClassStatus(class)">
+            {{ getClassStatus(class) === 'activa' ? 'Clase Activa' :
+            getClassStatus(class) === 'completada' ? 'Clase Completada' : 'Próxima Clase' }}
+          </div>
+          <div class="avatars">
+            <ion-avatar class="tutor-avatar" title="Profesor">
+              <img [src]="'../../../assets/icon/teacher.png?height=32&width=32'" [alt]="class.tutor.first_name">
+            </ion-avatar>
+            <ion-avatar class="student-avatar" title="Estudiante">
+              <img [src]="'../../../assets/icon/student.png?height=32&width=32'" [alt]="class.student.first_name">
+            </ion-avatar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="pagination">
+      <ion-button fill="clear" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+
+      <div class="page-numbers">
+        <button *ngFor="let page of getPageNumbers()" [class.active]="page === currentPage" (click)="setPage(page)">
+          {{ page }}
+        </button>
+      </div>
+
+      <ion-button fill="clear" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

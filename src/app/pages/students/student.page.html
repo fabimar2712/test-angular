@@ -1,0 +1,85 @@
+<ion-content [fullscreen]="true">
+  <app-page-header
+    title="Gestión de Estudiantes" 
+    subtitle="Ver información de estudiantes"
+  ></app-page-header>
+
+  <div class="main-content">
+    <!-- Sección de Búsqueda -->
+    <div class="search-section">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input 
+          type="text" 
+          placeholder="Buscar estudiantes..." 
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange($event)"
+        >
+      </div>
+    </div>
+
+    <!-- Resumen de Estudiantes -->
+    <div class="section-header">
+      <h2>Lista de Estudiantes</h2>
+      <p>Total: {{ filteredStudents.length }} estudiantes</p>
+    </div>
+
+    <!-- Lista de Estudiantes -->
+    <div class="students-list">
+      <div class="student-card" *ngFor="let student of paginatedStudents" [style.--accent-color]="getRandomAccentColor()">
+        <div class="student-info">
+          <ion-avatar>
+            <img [src]="student.avatar" [alt]="student.first_name">
+          </ion-avatar>
+          <div class="info-content">
+            <h3>{{ student.first_name }} {{ student.last_name }}</h3>
+            <p class="age">{{ calculateAge(student.date_of_birth) }} años</p>
+          </div>
+        </div>
+
+        <div class="student-details">
+          <p class="birth-date">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span class="label">Fecha de nacimiento:</span>
+            {{ formatDate(student.date_of_birth) }}
+          </p>
+          <p class="address">
+            <ion-icon name="location-outline"></ion-icon>
+            <span class="label">Dirección:</span>
+            {{ student.address.split('\n')[0] }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="pagination">
+      <ion-button 
+        fill="clear" 
+        [disabled]="currentPage === 1"
+        (click)="setPage(currentPage - 1)"
+      >
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+      
+      <div class="page-numbers">
+        <button 
+          *ngFor="let page of getPageNumbers()"
+          [class.active]="page === currentPage"
+          (click)="setPage(page)"
+        >
+          {{ page }}
+        </button>
+      </div>
+
+      <ion-button 
+        fill="clear" 
+        [disabled]="currentPage === totalPages"
+        (click)="setPage(currentPage + 1)"
+      >
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+

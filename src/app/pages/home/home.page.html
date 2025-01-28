@@ -1,0 +1,71 @@
+<ion-content>
+  <!-- Sección Hero -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Bienvenido </h1>
+
+    </div>
+  </section>
+
+  <!-- Sección de Opciones -->
+  <section class="options-section">
+    <div class="options-grid">
+      <!-- Tarjeta de Estudiantes -->
+      <ion-card class="option-card" routerLink="/student">
+        <div class="card-image" style="background-image: url('/assets/images/students.jpg');">
+          <ion-img src="../../../assets/images/peoples.png?height=160&width=280"></ion-img>
+        </div>
+        <div class="card-content">
+          <h3>Ver Usuarios</h3>
+          <p>Para ver toda la información de los usuarios haz click en el botón</p>
+          <ion-button class="action-button" expand="block" (click)="navigateToStudent()">
+            Usuarios
+            <ion-icon name="school" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card>
+
+      <!-- Tarjeta de Tutores -->
+      <ion-card class="option-card" routerLink="/tutors">
+        <div class="card-image" style="background-image: url('/assets/images/tutors.jpg');">
+          <ion-img src="../../../assets/images/peoples.png?height=160&width=280"></ion-img>
+        </div>
+        <div class="card-content">
+          <h3>Ver Tutores</h3>
+          <p>Para ver toda la información de los tutores haz click en el botón</p>
+          <ion-button class="action-button" expand="block" (click)="navigateToTutor()">
+            Tutores
+            <ion-icon name="people" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card>
+
+      <!-- Tarjeta de Reservas -->
+      <ion-card class="option-card" routerLink="/classes">
+        <div class="card-image" style="background-image: url('/assets/images/classes.jpg');">
+          <ion-img src="../../../assets/images/peoples.png?height=160&width=280"></ion-img>
+        </div>
+        <div class="card-content">
+          <h3>Ver Reservas</h3>
+          <p>Para ver toda la información de las reservas haz click en el botón</p>
+          <ion-button class="action-button" expand="block" (click)="navigateToClasses()">
+            Reservas
+            <ion-icon name="calendar" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card>
+    </div>
+  </section>
+
+  <!-- Sección de Aliados -->
+  <section class="partners-section">
+    <h2>Respaldado por aliados</h2>
+    <div class="partner-logos">
+      <ion-icon name="school-outline"></ion-icon>
+      <ion-icon name="library-outline"></ion-icon>
+      <ion-icon name="book-outline"></ion-icon>
+      <ion-icon name="desktop-outline"></ion-icon>
+      <ion-icon name="globe-outline"></ion-icon>
+    </div>
+  </section>
+</ion-content>

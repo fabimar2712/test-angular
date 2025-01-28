@@ -1,0 +1,84 @@
+<ion-content [fullscreen]="true">
+  <app-page-header title="Gestión de Tutores" subtitle="Ver información de tutores"></app-page-header>
+
+  <!-- Contenido Principal -->
+  <div class="main-content">
+    <!-- Sección de Búsqueda -->
+    <div class="search-section">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" placeholder="Buscar tutores..." [(ngModel)]="searchTerm" (input)="onSearchChange($event)">
+      </div>
+      <ion-select 
+        interface="popover" 
+        placeholder="Especialidad" 
+        [(ngModel)]="selectedSpecialty"
+        (ionChange)="onSpecialtyChange($event.detail.value)"
+        class="specialty-select"
+        [interfaceOptions]="{
+          cssClass: 'select-interface-popover'
+        }"
+      >
+        <ion-select-option value="">Todas</ion-select-option>
+        <ion-select-option *ngFor="let specialty of specialties" [value]="specialty">
+          {{ specialty }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <!-- Cuadrícula de Tutores -->
+    <div class="tutors-grid">
+      <div class="tutor-card" *ngFor="let tutor of paginatedTutors">
+        <div class="card-header">
+          <div class="profile-section">
+            <ion-avatar class="profile-avatar">
+              <img [src]="'../../../assets/icon/teacher.png?height=80&width=80'" [alt]="tutor.first_name">
+            </ion-avatar>
+            <div class="profile-info">
+              <h3>{{ tutor.first_name }} {{ tutor.last_name }}</h3>
+              <p class="date">Desde {{ formatDate(tutor.date_of_birth) }}</p>
+            </div>
+          </div>
+          <div class="speciality-badge">
+            <span class="speciality-label">Especialidad:</span>
+            <span class="speciality-value">{{ tutor.speciality }}</span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="status-items">
+            <div class="status-item" *ngFor="let item of getStatusItems(tutor)">
+              <ion-icon [name]="item.icon" [class.checked]="item.checked"></ion-icon>
+              <span>{{ item.label }}</span>
+              <ion-icon [name]="item.checked ? 'checkmark-circle' : 'ellipse-outline'" class="check-icon"
+                [class.checked]="item.checked">
+              </ion-icon>
+            </div>
+          </div>
+
+          <div class="tutor-details">
+            <p><ion-icon name="mail-outline"></ion-icon> {{ tutor.email }}</p>
+            <p><ion-icon name="flag-outline"></ion-icon> {{ tutor.nationality }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="pagination">
+      <ion-button fill="clear" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+
+      <div class="page-numbers">
+        <button *ngFor="let page of getPageNumbers()" [class.active]="page === currentPage" (click)="setPage(page)">
+          {{ page }}
+        </button>
+      </div>
+
+      <ion-button fill="clear" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

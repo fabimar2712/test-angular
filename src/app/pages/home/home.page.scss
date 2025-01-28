@@ -1,0 +1,139 @@
+.hero-section {
+    position: relative;
+    height: 50vh;
+    background: linear-gradient(135deg, #3880ff 0%, #4c8dff 100%);
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('../../../assets/images/peoples.png') center/cover;
+      opacity: 0.1;
+      z-index: 0;
+    }
+  
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 2rem;
+  
+      h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+  
+      p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+  
+  .options-section {
+    margin-top: -3rem;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+  
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+  
+      .option-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+  
+        &.active {
+          border: 2px solid var(--ion-color-primary);
+          transform: translateY(-5px);
+        }
+  
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+  
+        .card-image {
+          height: 160px;
+          background-size: cover;
+          background-position: center;
+        }
+  
+        .card-content {
+          padding: 1.5rem;
+  
+          h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #000;
+          }
+  
+          p {
+            color: var(--ion-color-medium);
+            margin-bottom: 1rem;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+  
+  .action-button {
+    --background: var(--ion-color-primary);
+    --border-radius: 8px;
+    --padding-start: 1.5rem;
+    --padding-end: 1.5rem;
+    font-weight: 500;
+    height: 48px;
+    margin: 0.5rem 0;
+  }
+  
+  .partners-section {
+    padding: 2rem 1rem;
+    text-align: center;
+    background: #f8f9fa;
+  
+    h2 {
+      color: var(--ion-color-medium);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+  
+    .partner-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+  
+      ion-icon {
+        font-size: 2rem;
+        color: var(--ion-color-medium);
+      }
+    }
+  }
+  
+  
